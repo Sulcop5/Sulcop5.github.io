@@ -8,7 +8,6 @@
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☂️</text></svg>"
     />
-
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -16,11 +15,16 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-
     <style>
       @font-face {
         font-family: "Sarasa Gothic J";
         src: url("../fonts/Sarasa Gothic J.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+      }
+      @font-face {
+        font-family: "CangEr MingHei";
+        src: url("../fonts/仓耳明黑W04.ttf") format("truetype");
         font-weight: normal;
         font-style: normal;
       }
@@ -33,12 +37,6 @@
         --accent: #ff7b42;
         --card-bg: #ffffff;
         --topbar-height: 56px;
-        --font-body:
-          "Sarasa Gothic J", -apple-system, BlinkMacSystemFont, "Segoe UI",
-          Helvetica, Arial, sans-serif;
-        --font-heading:
-          "Sarasa Gothic J", -apple-system, BlinkMacSystemFont, "Segoe UI",
-          Helvetica, Arial, sans-serif;
       }
 
       * {
@@ -50,9 +48,15 @@
         scroll-behavior: smooth;
         scroll-padding-top: var(--topbar-height);
       }
-
       body {
-        font-family: var(--font-body);
+        font-family:
+          "Sarasa Gothic J",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Helvetica,
+          Arial,
+          sans-serif;
         background: linear-gradient(
           160deg,
           var(--bg) 0%,
@@ -85,14 +89,6 @@
         50% {
           transform: translateY(-5px);
         }
-      }
-
-      /* ---- 背景装饰 ---- */
-      .decor {
-        position: fixed;
-        pointer-events: none;
-        z-index: 0;
-        opacity: 0.5;
       }
       @keyframes drift1 {
         0%,
@@ -135,6 +131,24 @@
           opacity: 0.6;
         }
       }
+      @keyframes pulse-dot {
+        0%,
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+        50% {
+          opacity: 0.5;
+          transform: scale(1.5);
+        }
+      }
+
+      .decor {
+        position: fixed;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.5;
+      }
       .decor--flute {
         top: 6%;
         right: 4%;
@@ -175,7 +189,6 @@
         animation: noteFloat 16s ease-in-out 7s infinite;
       }
 
-      /* ---- 顶栏 ---- */
       .topbar {
         position: fixed;
         top: 0;
@@ -227,6 +240,34 @@
         .topbar-nav {
           display: none;
         }
+      }
+      .topbar-social {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .topbar-social-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.75);
+        font-size: 20px;
+        transition: all 0.25s ease;
+      }
+      .topbar-social-btn i {
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .topbar-social-btn:hover i {
+        color: #fff;
+      }
+      .topbar-social-btn:hover {
+        background: rgba(255, 255, 255, 0.15);
+      }
+      @media (max-width: 600px) {
         .group-num-box {
           flex-direction: column;
           gap: 10px;
@@ -263,41 +304,12 @@
           font-size: 24px;
         }
       }
-      .topbar-social {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-      }
-      .topbar-social-btn {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        text-decoration: none;
-        color: rgba(255, 255, 255, 0.75);
-        font-size: 20px;
-        transition: all 0.25s ease;
-      }
-      .topbar-social-btn i {
-        color: rgba(255, 255, 255, 0.8);
-      }
-      .topbar-social-btn:hover i {
-        color: #fff;
-      }
-      .topbar-social-btn:hover {
-        background: rgba(255, 255, 255, 0.15);
-      }
 
-      /* ---- 主体 ---- */
       .container {
         max-width: 800px;
         margin: 0 auto;
         padding: 24px 24px 80px;
       }
-
-      /* ---- Hero ---- */
       .hero {
         text-align: center;
         padding-top: calc(var(--topbar-height) + 48px);
@@ -305,16 +317,24 @@
         animation: fadeInUp 0.7s ease both;
       }
       .hero__icon {
-        width: 300px;
+        width: 200px;
         height: auto;
         margin: 0 auto 24px;
         display: block;
-        border-radius: 6px;
+        border-radius: 12px;
         box-shadow: 0 6px 20px rgba(26, 60, 68, 0.2);
         animation: float 4s ease-in-out infinite;
       }
       .hero h1 {
-        font-family: var(--font-heading);
+        font-family:
+          "CangEr MingHei",
+          "Sarasa Gothic J",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Helvetica,
+          Arial,
+          sans-serif;
         font-size: 72px;
         font-weight: 700;
         letter-spacing: 0.12em;
@@ -331,7 +351,6 @@
         letter-spacing: 0.06em;
       }
 
-      /* ---- 小通告 ---- */
       .announce {
         display: flex;
         align-items: center;
@@ -354,19 +373,7 @@
         flex-shrink: 0;
         animation: pulse-dot 2s ease-in-out infinite;
       }
-      @keyframes pulse-dot {
-        0%,
-        100% {
-          opacity: 1;
-          transform: scale(1);
-        }
-        50% {
-          opacity: 0.5;
-          transform: scale(1.5);
-        }
-      }
 
-      /* ---- 板块 ---- */
       .section {
         margin-bottom: 36px;
         padding-bottom: 36px;
@@ -391,15 +398,16 @@
         );
         margin-bottom: 20px;
       }
-      .section__num {
-        font-size: 14px;
-        font-weight: 600;
-        color: rgba(255, 255, 255, 0.5);
-        letter-spacing: 0.06em;
-        min-width: 24px;
-      }
       .section__title {
-        font-family: var(--font-heading);
+        font-family:
+          "CangEr MingHei",
+          "Sarasa Gothic J",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Helvetica,
+          Arial,
+          sans-serif;
         font-size: 32px;
         font-weight: 600;
         color: var(--text-on-bg);
@@ -425,7 +433,15 @@
         line-height: 1.8;
       }
       .subsection-title {
-        font-family: var(--font-heading);
+        font-family:
+          "CangEr MingHei",
+          "Sarasa Gothic J",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Helvetica,
+          Arial,
+          sans-serif;
         font-size: 22px;
         font-weight: 600;
         color: rgba(255, 255, 255, 0.85);
@@ -448,7 +464,15 @@
         box-shadow: 0 8px 24px rgba(26, 60, 68, 0.15);
       }
       .section-card__title {
-        font-family: var(--font-heading);
+        font-family:
+          "CangEr MingHei",
+          "Sarasa Gothic J",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Helvetica,
+          Arial,
+          sans-serif;
         font-size: 18px;
         font-weight: 500;
         color: var(--text-main);
@@ -468,19 +492,12 @@
         transform: translateX(3px);
       }
 
-      /* ---- 群友口味标签 ---- */
       .tag-cloud {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         gap: 10px;
         margin-bottom: 18px;
-      }
-      .tag-cloud__label {
-        font-size: 12px;
-        color: rgba(255, 255, 255, 0.5);
-        letter-spacing: 0.06em;
-        margin-right: 4px;
       }
       .tag {
         display: inline-block;
@@ -519,7 +536,6 @@
         box-shadow: 0 2px 8px rgba(196, 122, 158, 0.3);
       }
 
-      /* ---- 演出表格 ---- */
       .perf-table {
         margin-top: 16px;
       }
@@ -572,7 +588,6 @@
         border-bottom: none;
       }
 
-      /* ---- 图片数据表 ---- */
       .data-table {
         font-size: 14px;
       }
@@ -622,8 +637,6 @@
         font-size: 14px;
         letter-spacing: 0.1em;
       }
-
-      /* ---- 页脚 ---- */
       footer {
         text-align: center;
         font-size: 12px;
@@ -632,123 +645,6 @@
         padding-top: 28px;
         margin-top: 56px;
         border-top: 1px solid rgba(255, 255, 255, 0.2);
-      }
-
-      /* ---- 字体面板 ---- */
-      .font-panel-toggle {
-        position: fixed;
-        bottom: 24px;
-        right: 24px;
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        border: 1px solid rgba(255, 255, 255, 0.5);
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(8px);
-        color: #fff;
-        font-size: 20px;
-        cursor: pointer;
-        z-index: 2000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.25s ease;
-      }
-      .font-panel-toggle:hover {
-        background: rgba(255, 255, 255, 0.4);
-      }
-      .font-panel__backdrop {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.25);
-        z-index: 2000;
-        display: none;
-      }
-      .font-panel__backdrop--visible {
-        display: block;
-      }
-      .font-panel {
-        position: fixed;
-        top: 0;
-        right: -380px;
-        width: 360px;
-        height: 100vh;
-        background: #fff;
-        z-index: 2001;
-        padding: 24px;
-        overflow-y: auto;
-        transition: right 0.3s ease;
-        box-shadow: -2px 0 16px rgba(0, 0, 0, 0.1);
-      }
-      .font-panel--open {
-        right: 0;
-      }
-      .font-panel__header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 24px;
-      }
-      .font-panel__title {
-        font-size: 15px;
-        font-weight: 500;
-        color: var(--text-main);
-      }
-      .font-panel__close {
-        width: 36px;
-        height: 36px;
-        border: none;
-        background: none;
-        cursor: pointer;
-        font-size: 20px;
-        color: var(--text-muted);
-      }
-      .font-panel__close:hover {
-        color: var(--accent);
-      }
-      .font-category {
-        margin-bottom: 22px;
-      }
-      .font-category__label {
-        font-size: 11px;
-        font-weight: 500;
-        letter-spacing: 0.08em;
-        color: var(--text-muted);
-        text-transform: uppercase;
-        margin-bottom: 6px;
-      }
-      .font-category__select {
-        width: 100%;
-        padding: 9px 10px;
-        border: 1px solid #dde;
-        background: #fff;
-        font-size: 14px;
-        color: var(--text-main);
-        cursor: pointer;
-      }
-      .font-category__select:focus {
-        outline: none;
-        border-color: var(--accent);
-      }
-      .font-hint {
-        font-size: 12px;
-        color: var(--text-muted);
-        margin-top: 8px;
-      }
-      .font-upload {
-        margin-top: 28px;
-        padding-top: 20px;
-        border-top: 1px solid #eee;
-      }
-      .font-reset-btn {
-        margin-top: 14px;
-        font-size: 12px;
-        color: var(--text-muted);
-        background: none;
-        border: none;
-        cursor: pointer;
-        text-decoration: underline;
-        padding: 0;
       }
     </style>
   </head>
@@ -777,16 +673,17 @@
     <img src="images/flute.png" class="decor decor--flute" alt="" />
     <img src="images/fugu.png" class="decor decor--fugu" alt="" />
     <img src="images/aoi_tori.png" class="decor decor--tori" alt="" />
-    <span class="decor decor--note1">♪</span>
-    <span class="decor decor--note2">♫</span>
-    <span class="decor decor--note3">♩</span>
+    <span class="decor decor--note1">♪</span
+    ><span class="decor decor--note2">♫</span
+    ><span class="decor decor--note3">♩</span>
+
     <nav class="topbar">
       <a href="/poshanbu/" class="topbar-brand">北宇治迫伞部</a>
       <div class="topbar-nav">
-        <a href="#qq" class="topbar-nav-link">QQ群</a>
-        <a href="#bilibili" class="topbar-nav-link">B站</a>
-        <a href="#yuri" class="topbar-nav-link">百合图片</a>
-        <a href="#score" class="topbar-nav-link">乐谱</a>
+        <a href="#qq" class="topbar-nav-link">QQ群</a
+        ><a href="#bilibili" class="topbar-nav-link">B站</a
+        ><a href="#yuri" class="topbar-nav-link">百合图片</a
+        ><a href="#score" class="topbar-nav-link">乐谱</a>
       </div>
       <div class="topbar-social">
         <a
@@ -796,7 +693,7 @@
           rel="noopener noreferrer"
           title="哔哩哔哩"
           aria-label="哔哩哔哩"
-          ><i class="fa-brands fa-bilibili" aria-hidden="true"></i
+          ><i class="fa-brands fa-bilibili"></i
         ></a>
         <a
           href="https://qm.qq.com/q/ScSc6UMCoq"
@@ -805,10 +702,10 @@
           rel="noopener noreferrer"
           title="点击链接加我为QQ好友"
           aria-label="QQ"
-          ><i class="fa-brands fa-qq" aria-hidden="true"></i
+          ><i class="fa-brands fa-qq"></i
         ></a>
         <a href="/" class="topbar-social-btn" title="返回主页" aria-label="主页"
-          ><i class="fa-solid fa-home" aria-hidden="true"></i
+          ><i class="fa-solid fa-home"></i
         ></a>
       </div>
     </nav>
@@ -819,33 +716,25 @@
         <h1>北宇治迫伞部</h1>
         <p class="hero__tagline">河豚发电 · 图片交流 · 音乐鉴赏 · 乐谱制作</p>
       </div>
-
       <div class="announce">
-        <span class="announce__dot"></span>
-        群内正在抽奖魔裁同会社的新作「魔法少女ノ因習村」，欢迎大家入群参与！如果进来的人多可能考虑增加数量（？）
+        <span class="announce__dot"></span
+        >群内正在抽奖魔裁同会社的新作《魔法少女ノ因習村》，欢迎大家入群参与！如果进来的人多可能考虑增加数量（？）
       </div>
 
-      <!-- QQ群 -->
       <div class="section" id="qq">
-        <div class="section__header">
-          <h2 class="section__title">QQ群</h2>
-        </div>
+        <div class="section__header"><h2 class="section__title">QQ群</h2></div>
         <p class="section__intro">
-          欢迎加入北宇治迫伞部QQ群，这里是河豚们聊天吹水的大本营。
-          群内汇聚了众多同好，无论你是来分享百合图片、交流音乐、寻找乐谱、直播看番，还是单纯想找个地方摸鱼，这里都很适合你。
+          欢迎加入北宇治迫伞部QQ群，这里是河豚们聊天吹水的大本营。群内汇聚了众多同好，无论你是来分享百合图片、交流音乐、寻找乐谱、直播看番，还是单纯想找个地方摸鱼，这里都很适合你。
         </p>
-
         <a
           href="https://qm.qq.com/q/UieQ53feQo"
           class="section-card"
           target="_blank"
-        >
-          <div class="section-card__title">
+          ><div class="section-card__title">
             加入QQ群 <span class="section-card__icon">↗</span>
           </div>
-          <div class="section-card__sub">https://qm.qq.com/q/UieQ53feQo</div>
-        </a>
-
+          <div class="section-card__sub">https://qm.qq.com/q/UieQ53feQo</div></a
+        >
         <div
           class="group-num-box"
           style="
@@ -859,28 +748,27 @@
             box-shadow: 0 2px 8px rgba(26, 60, 68, 0.1);
           "
         >
-          <span style="display: flex; align-items: center; gap: 8px">
-            <i
+          <span style="display: flex; align-items: center; gap: 8px"
+            ><i
               class="fa-brands fa-qq"
               style="font-size: 20px; color: #12b7f5"
-            ></i>
-            <span
+            ></i
+            ><span
               style="
                 font-size: 13px;
                 color: var(--text-muted);
                 letter-spacing: 0.04em;
               "
               >群号</span
-            >
-            <strong
+            ><strong
               style="
                 font-size: 17px;
                 letter-spacing: 0.06em;
                 color: var(--text-main);
               "
               >1041865199</strong
-            >
-          </span>
+            ></span
+          >
           <button
             class="copy-btn"
             onclick="
@@ -903,73 +791,62 @@
               border-radius: 4px;
               font-size: 13px;
               letter-spacing: 0.04em;
-              transition: all 0.25s ease;
             "
           >
             点击复制群号
           </button>
         </div>
-
         <p class="section__intro" style="margin-top: 18px">
-          以下是群聊的口味（有大量的讨论和图片）——
+          群友们口味相近，经常出没于以下作品的讨论当中——
         </p>
         <div class="tag-cloud">
-          <span class="tag tag--1">利兹与青鸟</span>
-          <span class="tag tag--2">吹响吧！上低音号</span>
-          <span class="tag tag--3">少女歌剧剧场版</span>
-          <span class="tag tag--4">上伊那牡丹</span>
-          <span class="tag tag--5">魔法少女的魔女审判</span>
+          <span class="tag tag--1">利兹与青鸟</span
+          ><span class="tag tag--2">吹响吧！上低音号</span
+          ><span class="tag tag--3">少女歌剧剧场版</span
+          ><span class="tag tag--4">上伊那牡丹</span
+          ><span class="tag tag--5">魔法少女的魔女审判</span>
         </div>
       </div>
 
-      <!-- 哔哩哔哩 -->
       <div class="section" id="bilibili">
         <div class="section__header">
           <h2 class="section__title">bilibili账号</h2>
         </div>
         <p class="section__intro">
-          主要上传各种演出视频 ·
-          曲谱同步（曲谱同步在各个成员的b站号）。欢迎关注！
+          演出视频 · 曲谱同步。欢迎关注、三连、转发！
         </p>
         <a
           href="https://space.bilibili.com/398278423"
           class="section-card"
           target="_blank"
-        >
-          <div class="section-card__title">
+          ><div class="section-card__title">
             北宇治迫伞部 <span class="section-card__icon">↗</span>
           </div>
-          <div class="section-card__sub">space.bilibili.com/398278423</div>
-        </a>
-
+          <div class="section-card__sub">space.bilibili.com/398278423</div></a
+        >
         <p class="section__intro" style="margin-top: 18px">
           以下是我们参加的展会和演出的曲目，大家可以在B站号上观看演出视频。
         </p>
-
         <div class="perf-table">
           <div class="perf-table__header">
-            <span>演出场地</span>
-            <span>演奏曲目</span>
+            <span>演出场地</span><span>演奏曲目</span>
           </div>
           <div class="perf-table__row">
-            <span class="perf-table__venue">第四届安徽百合Only</span>
-            <span class="perf-table__pieces">
-              <div>利兹与青鸟：第三乐章「爱的决断」</div>
+            <span class="perf-table__venue">第四届安徽百合Only</span
+            ><span class="perf-table__pieces"
+              ><div>利兹与青鸟：第三乐章「爱的决断」</div>
               <div>魔法少女的魔女裁判：ボクとワタシの</div>
-              <div>终将成为你：一成不变的道路</div>
-            </span>
+              <div>终将成为你：一成不变的道路</div></span
+            >
           </div>
         </div>
       </div>
 
-      <!-- 百合图片 -->
       <div class="section" id="yuri">
         <div class="section__header">
           <h2 class="section__title">百合图片整理</h2>
         </div>
-
         <div class="section-divider"></div>
-
         <div
           style="
             display: flex;
@@ -980,15 +857,22 @@
         >
           <span
             style="
-              font-family: var(--font-heading);
+              font-family:
+                &quot;CangEr MingHei&quot;,
+                &quot;Sarasa Gothic J&quot;,
+                -apple-system,
+                BlinkMacSystemFont,
+                &quot;Segoe UI&quot;,
+                Helvetica,
+                Arial,
+                sans-serif;
               font-size: 20px;
               font-weight: 600;
               color: #fff;
               letter-spacing: 0.06em;
             "
             >迫伞部图片集合</span
-          >
-          <span
+          ><span
             style="
               font-size: 12px;
               color: rgba(255, 255, 255, 0.5);
@@ -997,29 +881,24 @@
             >Last Update — 2026.06.30</span
           >
         </div>
-
         <a
           href="https://pan.ustc.edu.cn/share/index/157ee061ee264a0884e1?p=1"
           class="section-card"
           target="_blank"
-          style="margin-bottom: 16px"
-        >
-          <div class="section-card__title">
+          ><div class="section-card__title">
             下载图片合集 <span class="section-card__icon">↗</span>
           </div>
-          <div class="section-card__sub">pan.ustc.edu.cn · 密码 1041865199</div>
-        </a>
-
+          <div class="section-card__sub">
+            pan.ustc.edu.cn · 密码 1041865199
+          </div></a
+        >
         <p class="section__intro">
           对迫伞部群内分享的图片进行了分类整理，涵盖魔裁、恋人不行、辉夜姬、孤独摇滚、京吹等
           IP，以及其他作品。
         </p>
-
         <div class="data-table">
           <div class="data-table__row data-table__row--head">
-            <span>IP 名称</span>
-            <span>数量</span>
-            <span>文件夹</span>
+            <span>IP 名称</span><span>数量</span><span>文件夹</span>
           </div>
           <div class="data-table__row">
             <span>魔法少女的魔女审判</span><span>1770</span
@@ -1099,9 +978,7 @@
             <span>梅まろ</span><span>18</span><span>Umeboshimaro</span>
           </div>
         </div>
-
         <div class="section-divider"></div>
-
         <h3 class="subsection-title">Mizore Sorter</h3>
         <p class="section__intro">
           一套用于本地二次元图库整理的轻量级工具。Mizore Sorter
@@ -1113,17 +990,15 @@
           href="https://github.com/Sulcop5/Kitauji-PSB-Sorter"
           class="section-card"
           target="_blank"
-        >
-          <div class="section-card__title">
+          ><div class="section-card__title">
             GitHub 仓库 <span class="section-card__icon">↗</span>
           </div>
           <div class="section-card__sub">
             Sulcop5/Kitauji-PSB-Sorter · Python + CustomTkinter
-          </div>
-        </a>
+          </div></a
+        >
       </div>
 
-      <!-- 乐谱 -->
       <div class="section" id="score">
         <div class="section__header">
           <h2 class="section__title">乐谱获取</h2>
@@ -1135,166 +1010,15 @@
             >或者当苦力</span
           >。
         </p>
-        <a href="#qq" class="section-card">
-          <div class="section-card__title">
+        <a href="#qq" class="section-card"
+          ><div class="section-card__title">
             加入QQ群获取乐谱 <span class="section-card__icon">↑</span>
           </div>
-          <div class="section-card__sub">点击返回页面顶部 QQ 群板块</div>
-        </a>
+          <div class="section-card__sub">点击返回页面顶部 QQ 群板块</div></a
+        >
       </div>
 
       <footer>© 2026 北宇治迫伞部 · Kitauji PSB</footer>
     </div>
-
-    <!-- 字体面板 -->
-    <button class="font-panel-toggle" id="fontPanelToggle" title="字体">
-      Aa
-    </button>
-    <div class="font-panel__backdrop" id="fontPanelBackdrop"></div>
-    <aside class="font-panel" id="fontPanel">
-      <div class="font-panel__header">
-        <span class="font-panel__title">字体设置</span>
-        <button class="font-panel__close" id="fontPanelClose">&times;</button>
-      </div>
-      <div class="font-category">
-        <div class="font-category__label">正文</div>
-        <select class="font-category__select" id="fontBodySelect">
-          <option value="">默认</option>
-        </select>
-      </div>
-      <div class="font-category">
-        <div class="font-category__label">标题</div>
-        <select class="font-category__select" id="fontHeadingSelect">
-          <option value="">默认</option>
-        </select>
-      </div>
-      <div class="font-upload">
-        <div class="font-hint">拖入 fonts 文件夹后刷新</div>
-      </div>
-      <button class="font-reset-btn" id="fontResetBtn">恢复默认</button>
-    </aside>
-
-    <script>
-      (function () {
-        var root = document.documentElement;
-        var D = {
-          body: "'Sarasa Gothic J',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif",
-          heading:
-            "'Sarasa Gothic J',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif",
-        };
-        var selB = document.getElementById("fontBodySelect"),
-          selH = document.getElementById("fontHeadingSelect");
-        var p = document.getElementById("fontPanel"),
-          bd = document.getElementById("fontPanelBackdrop");
-        document.getElementById("fontPanelToggle").onclick = function () {
-          p.classList.add("font-panel--open");
-          bd.classList.add("font-panel__backdrop--visible");
-        };
-        var cl = function () {
-          p.classList.remove("font-panel--open");
-          bd.classList.remove("font-panel__backdrop--visible");
-        };
-        document.getElementById("fontPanelClose").onclick = cl;
-        bd.onclick = cl;
-
-        function loadFonts() {
-          fetch("/api/fonts")
-            .then(function (r) {
-              return r.json();
-            })
-            .then(function (fs) {
-              [selB, selH].forEach(function (s) {
-                fs.forEach(function (f) {
-                  var o = document.createElement("option");
-                  o.value = "../fonts/" + f;
-                  o.textContent = f.replace(/\.[^.]+$/, "");
-                  s.appendChild(o);
-                });
-              });
-              restoreSaved();
-            })
-            .catch(function () {
-              restoreSaved();
-            });
-        }
-
-        function restoreSaved() {
-          ["body", "heading"].forEach(function (t) {
-            var s;
-            try {
-              s = localStorage.getItem("psb-font-" + t);
-            } catch (e) {
-              s = null;
-            }
-            if (s) {
-              inj(s);
-              apply(t, s);
-              (t === "body" ? selB : selH).value = s;
-            }
-          });
-        }
-
-        function inj(fn) {
-          var n = fn.replace(/^.*[\\/]/, "").replace(/\.[^.]+$/, ""),
-            id = "ff-" + n.replace(/[^a-zA-Z0-9]/g, "-");
-          if (document.getElementById(id)) return;
-          var e = fn.split(".").pop().toLowerCase(),
-            fm =
-              e === "ttf" ? "truetype" : e === "woff2" ? "woff2" : "opentype",
-            st = document.createElement("style");
-          st.id = id;
-          st.textContent =
-            "@font-face{font-family:'" +
-            n +
-            "';src:url('" +
-            fn +
-            "') format('" +
-            fm +
-            "')}";
-          document.head.appendChild(st);
-        }
-
-        function apply(t, fn) {
-          var n = fn.replace(/^.*[\\/]/, "").replace(/\.[^.]+$/, ""),
-            v = "'" + n + "', " + D[t];
-          root.style.setProperty("--font-" + t, v);
-          try {
-            localStorage.setItem("psb-font-" + t, fn);
-          } catch (e) {}
-        }
-
-        selB.onchange = function () {
-          if (!this.value) {
-            root.style.setProperty("--font-body", D.body);
-            localStorage.removeItem("psb-font-body");
-            return;
-          }
-          inj(this.value);
-          apply("body", this.value);
-        };
-        selH.onchange = function () {
-          if (!this.value) {
-            root.style.setProperty("--font-heading", D.heading);
-            localStorage.removeItem("psb-font-heading");
-            return;
-          }
-          inj(this.value);
-          apply("heading", this.value);
-        };
-
-        document.getElementById("fontResetBtn").onclick = function () {
-          root.style.setProperty("--font-body", D.body);
-          root.style.setProperty("--font-heading", D.heading);
-          selB.value = "";
-          selH.value = "";
-          try {
-            localStorage.removeItem("psb-font-body");
-            localStorage.removeItem("psb-font-heading");
-          } catch (e) {}
-        };
-
-        loadFonts();
-      })();
-    </script>
   </body>
 </html>

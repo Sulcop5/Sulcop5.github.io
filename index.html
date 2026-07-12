@@ -25,6 +25,12 @@
         font-weight: normal;
         font-style: normal;
       }
+      @font-face {
+        font-family: "FZFW ZhuZi";
+        src: url("fonts/FZFWZhuZiABiaoTMCJW.TTF") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+      }
 
       :root {
         --bg-color: #fcfaf2;
@@ -35,15 +41,6 @@
         --accent-light: #f0f7f8;
         --border-color: #c0d6d9;
         --topbar-height: 62px;
-        --font-body:
-          "Sarasa Gothic J", -apple-system, BlinkMacSystemFont, "Segoe UI",
-          Helvetica, Arial, sans-serif;
-        --font-heading:
-          "Sarasa Gothic J", -apple-system, BlinkMacSystemFont, "Segoe UI",
-          Helvetica, Arial, sans-serif;
-        --font-card-desc:
-          "Sarasa Gothic J", -apple-system, BlinkMacSystemFont, "Segoe UI",
-          Helvetica, Arial, sans-serif;
       }
 
       * {
@@ -58,7 +55,14 @@
       }
 
       body {
-        font-family: var(--font-body);
+        font-family:
+          "Sarasa Gothic J",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Helvetica,
+          Arial,
+          sans-serif;
         background-color: var(--bg-color);
         color: var(--text-main);
         line-height: 1.9;
@@ -450,127 +454,6 @@
         margin-bottom: 14px;
       }
 
-      /* ---- 字体面板 ---- */
-      .font-panel-toggle {
-        position: fixed;
-        bottom: 24px;
-        right: 24px;
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        border: 1px solid var(--border-color);
-        background: var(--bg-color);
-        color: var(--text-muted);
-        font-size: 20px;
-        cursor: pointer;
-        z-index: 2000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.25s ease;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-      }
-      .font-panel-toggle:hover {
-        color: var(--accent-cyan);
-        border-color: var(--accent-cyan);
-      }
-      .font-panel {
-        position: fixed;
-        top: 0;
-        right: -380px;
-        width: 360px;
-        height: 100vh;
-        background: var(--bg-color);
-        z-index: 2001;
-        padding: 24px;
-        overflow-y: auto;
-        transition: right 0.3s ease;
-        box-shadow: -2px 0 12px rgba(0, 0, 0, 0.06);
-      }
-      .font-panel--open {
-        right: 0;
-      }
-      .font-panel__backdrop {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.2);
-        z-index: 2000;
-        display: none;
-      }
-      .font-panel__backdrop--visible {
-        display: block;
-      }
-      .font-panel__header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 28px;
-      }
-      .font-panel__title {
-        font-size: 16px;
-        font-weight: 500;
-        letter-spacing: 0.06em;
-      }
-      .font-panel__close {
-        width: 36px;
-        height: 36px;
-        border: none;
-        background: none;
-        cursor: pointer;
-        font-size: 20px;
-        color: var(--text-muted);
-      }
-      .font-panel__close:hover {
-        color: var(--accent-cyan);
-      }
-      .font-category {
-        margin-bottom: 24px;
-      }
-      .font-category__label {
-        font-size: 12px;
-        font-weight: 500;
-        letter-spacing: 0.08em;
-        color: var(--text-muted);
-        text-transform: uppercase;
-        margin-bottom: 8px;
-      }
-      .font-category__select {
-        width: 100%;
-        padding: 10px 12px;
-        border: 1px solid var(--border-color);
-        background: #fff;
-        font-size: 14px;
-        color: var(--text-main);
-        cursor: pointer;
-        font-family: inherit;
-      }
-      .font-category__select:focus {
-        outline: none;
-        border-color: var(--accent-cyan);
-      }
-      .font-upload {
-        margin-top: 32px;
-        padding-top: 24px;
-        border-top: 1px solid var(--border-color);
-      }
-      .font-hint {
-        font-size: 12px;
-        color: var(--text-muted);
-        margin-top: 8px;
-      }
-      .font-reset {
-        margin-top: 16px;
-      }
-      .font-reset__btn {
-        font-size: 12px;
-        color: var(--text-muted);
-        background: none;
-        border: none;
-        cursor: pointer;
-        text-decoration: underline;
-        padding: 0;
-      }
-
       /* toast 提示 */
       .toast {
         position: fixed;
@@ -598,11 +481,26 @@
       .card-title,
       .section-title,
       .section-label {
-        font-family: var(--font-heading);
+        font-family:
+          "FZFW ZhuZi",
+          "Sarasa Gothic J",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Helvetica,
+          Arial,
+          sans-serif;
       }
       .card-desc,
       .profile-bio {
-        font-family: var(--font-card-desc);
+        font-family:
+          "Sarasa Gothic J",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Helvetica,
+          Arial,
+          sans-serif;
       }
     </style>
   </head>
@@ -777,242 +675,6 @@
       </footer>
     </div>
 
-    <!-- 字体面板切换按钮 -->
-    <button
-      class="font-panel-toggle"
-      id="fontPanelToggle"
-      title="字体设置"
-      aria-label="字体设置"
-    >
-      Aa
-    </button>
-
-    <!-- 字体面板遮罩 -->
-    <div class="font-panel__backdrop" id="fontPanelBackdrop"></div>
-
-    <!-- 字体面板 -->
-    <aside class="font-panel" id="fontPanel">
-      <div class="font-panel__header">
-        <span class="font-panel__title">字体设置</span>
-        <button class="font-panel__close" id="fontPanelClose" aria-label="关闭">
-          &times;
-        </button>
-      </div>
-
-      <div class="font-category">
-        <div class="font-category__label">正文</div>
-        <select class="font-category__select" id="fontBodySelect">
-          <option value="">默认（Sarasa Gothic J）</option>
-        </select>
-      </div>
-
-      <div class="font-category">
-        <div class="font-category__label">标题</div>
-        <select class="font-category__select" id="fontHeadingSelect">
-          <option value="">默认（Sarasa Gothic J）</option>
-        </select>
-      </div>
-
-      <div class="font-category">
-        <div class="font-category__label">卡片描述</div>
-        <select class="font-category__select" id="fontCardDescSelect">
-          <option value="">默认（Sarasa Gothic J）</option>
-        </select>
-      </div>
-
-      <div class="font-upload">
-        <div class="font-hint">
-          把 .ttf / .woff2 拖入 fonts 文件夹即自动出现在列表中
-        </div>
-      </div>
-
-      <div class="font-reset">
-        <button class="font-reset__btn" id="fontResetBtn">恢复默认字体</button>
-      </div>
-    </aside>
-
-    <script>
-      (function () {
-        var DEFAULTS = {
-          body: "'Sarasa Gothic J', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif",
-          heading:
-            "'Sarasa Gothic J', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif",
-          cardDesc:
-            "'Sarasa Gothic J', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif",
-        };
-
-        var root = document.documentElement;
-        var toggle = document.getElementById("fontPanelToggle");
-        var panel = document.getElementById("fontPanel");
-        var backdrop = document.getElementById("fontPanelBackdrop");
-        var closeBtn = document.getElementById("fontPanelClose");
-        var resetBtn = document.getElementById("fontResetBtn");
-        var selectBody = document.getElementById("fontBodySelect");
-        var selectHeading = document.getElementById("fontHeadingSelect");
-        var selectCardDesc = document.getElementById("fontCardDescSelect");
-
-        function open() {
-          panel.classList.add("font-panel--open");
-          backdrop.classList.add("font-panel__backdrop--visible");
-        }
-        function close() {
-          panel.classList.remove("font-panel--open");
-          backdrop.classList.remove("font-panel__backdrop--visible");
-        }
-        toggle.onclick = open;
-        closeBtn.onclick = close;
-        backdrop.onclick = close;
-
-        // 从服务端扫描 fonts/ 文件夹
-        function loadFonts() {
-          fetch("/api/fonts")
-            .then(function (r) {
-              return r.json();
-            })
-            .then(function (fonts) {
-              [selectBody, selectHeading, selectCardDesc].forEach(
-                function (sel) {
-                  sel
-                    .querySelectorAll('option:not([value=""])')
-                    .forEach(function (o) {
-                      o.remove();
-                    });
-                  fonts.forEach(function (f) {
-                    var opt = document.createElement("option");
-                    var fullPath = "fonts/" + f;
-                    opt.value = fullPath;
-                    opt.textContent = f.replace(/\.[^.]+$/, "");
-                    sel.appendChild(opt);
-                  });
-                },
-              );
-            })
-            .catch(function () {});
-        }
-
-        function injectFont(filename) {
-          var name = filename.replace(/^.*[\\/]/, "").replace(/\.[^.]+$/, "");
-          var id = "ff-" + name.replace(/[^a-zA-Z0-9]/g, "-");
-          if (document.getElementById(id)) return;
-          var ext = filename.split(".").pop().toLowerCase();
-          var fmt =
-            ext === "ttf" ? "truetype" : ext === "woff2" ? "woff2" : "opentype";
-          var style = document.createElement("style");
-          style.id = id;
-          style.textContent =
-            "@font-face{font-family:'" +
-            name +
-            "';src:url('" +
-            filename +
-            "') format('" +
-            fmt +
-            "')}";
-          document.head.appendChild(style);
-        }
-
-        function applyFont(type, filename) {
-          var name = filename.replace(/^.*[\\/]/, "").replace(/\.[^.]+$/, "");
-          var val = "'" + name + "', var(--font-body)";
-          if (type === "body") root.style.setProperty("--font-body", val);
-          else if (type === "heading")
-            root.style.setProperty("--font-heading", val);
-          else if (type === "cardDesc")
-            root.style.setProperty("--font-card-desc", val);
-          try {
-            localStorage.setItem("font-" + type, filename);
-          } catch (e) {}
-        }
-
-        function resetFont(type) {
-          if (type === "body")
-            root.style.setProperty("--font-body", DEFAULTS.body);
-          else if (type === "heading")
-            root.style.setProperty("--font-heading", DEFAULTS.heading);
-          else if (type === "cardDesc")
-            root.style.setProperty("--font-card-desc", DEFAULTS.cardDesc);
-          try {
-            localStorage.removeItem("font-" + type);
-          } catch (e) {}
-        }
-
-        ["body", "heading", "cardDesc"].forEach(function (type) {
-          var saved = (function () {
-            try {
-              return localStorage.getItem("font-" + type);
-            } catch (e) {
-              return null;
-            }
-          })();
-          if (saved) {
-            // 兼容旧路径：自动补 fonts/ 前缀
-            if (saved.indexOf("fonts/") !== 0 && saved.indexOf("/") === -1) {
-              saved = "fonts/" + saved;
-              try {
-                localStorage.setItem("font-" + type, saved);
-              } catch (e) {}
-            }
-            injectFont(saved);
-            applyFont(type, saved);
-            setTimeout(function () {
-              var sel =
-                type === "body"
-                  ? selectBody
-                  : type === "heading"
-                    ? selectHeading
-                    : selectCardDesc;
-              sel.value = saved;
-            }, 300);
-          }
-        });
-
-        selectBody.onchange = function () {
-          if (!this.value) {
-            resetFont("body");
-            this.value = "";
-            return;
-          }
-          injectFont(this.value);
-          applyFont("body", this.value);
-        };
-        selectHeading.onchange = function () {
-          if (!this.value) {
-            resetFont("heading");
-            this.value = "";
-            return;
-          }
-          injectFont(this.value);
-          applyFont("heading", this.value);
-        };
-        selectCardDesc.onchange = function () {
-          if (!this.value) {
-            resetFont("cardDesc");
-            this.value = "";
-            return;
-          }
-          injectFont(this.value);
-          applyFont("cardDesc", this.value);
-        };
-
-        resetBtn.onclick = function () {
-          ["font-body", "font-heading", "font-card-desc"].forEach(function (k) {
-            root.style.removeProperty(k);
-          });
-          ["body", "heading", "cardDesc"].forEach(function (k) {
-            try {
-              localStorage.removeItem("font-" + k);
-            } catch (e) {}
-          });
-          selectBody.value = "";
-          selectHeading.value = "";
-          selectCardDesc.value = "";
-          root.style.setProperty("--font-body", DEFAULTS.body);
-          root.style.setProperty("--font-heading", DEFAULTS.heading);
-          root.style.setProperty("--font-card-desc", DEFAULTS.cardDesc);
-        };
-
-        loadFonts();
-      })();
-    </script>
     <div class="toast" id="toast">QQ号已复制：2263467979</div>
   </body>
 </html>
