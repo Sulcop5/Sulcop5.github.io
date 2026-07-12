@@ -1,238 +1,1017 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>因果交流电灯 | 个人空间</title>
-    
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💡</text></svg>"
+    />
+
+    <!-- Font Awesome 6 for brand icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
     <style>
-        /* 1. 声明并引入同级目录下的自定义字体 Sarasa Gothic J */
-        @font-face {
-            font-family: 'Sarasa Gothic J';
-            src: url('Sarasa Gothic J.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
+      @font-face {
+        font-family: "Sarasa Gothic J";
+        src: url("fonts/Sarasa Gothic J.ttf") format("truetype");
+        font-weight: normal;
+        font-style: normal;
+      }
 
-        /* 日本传统色与排版变量定义 */
-        :root {
-            --bg-color: #FCFAF2;       /* 象牙色 (Ivory White) */
-            --text-main: #262626;     /* 墨色 (Sumi Black) */
-            --text-muted: #707C74;    /* 苔色 (Muted Grey-Green) */
-            --accent-cyan: #0089A7;   /* 缥色 (Traditional Cyan) */
-            --accent-light: #F0F7F8;  /* 浅缥底衬 */
-            --border-color: #C0D6D9;  /* 青灰细线 */
-        }
+      :root {
+        --bg-color: #fcfaf2;
+        --text-main: #262626;
+        --text-muted: #707c74;
+        --accent-cyan: #0089a7;
+        --accent-amber: #c88a3e;
+        --accent-light: #f0f7f8;
+        --border-color: #c0d6d9;
+        --topbar-height: 62px;
+        --font-body:
+          "Sarasa Gothic J", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Helvetica, Arial, sans-serif;
+        --font-heading:
+          "Sarasa Gothic J", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Helvetica, Arial, sans-serif;
+        --font-card-desc:
+          "Sarasa Gothic J", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Helvetica, Arial, sans-serif;
+      }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-        body {
-            /* 优先使用你指定的 Sarasa Gothic J 字体 */
-            font-family: 'Sarasa Gothic J', -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.7;
-            letter-spacing: 0.04em; /* 根据黑体特性微调字距 */
-            -webkit-font-smoothing: antialiased;
-        }
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: var(--topbar-height);
+      }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 80px 24px;
-        }
+      body {
+        font-family: var(--font-body);
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        line-height: 1.9;
+        letter-spacing: 0.05em;
+        font-size: 16px;
+        -webkit-font-smoothing: antialiased;
+      }
 
-        /* 头图与个人介绍区域 */
-        header {
-            text-align: center;
-            padding-bottom: 60px;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 60px;
+      /* ===== 动画 ===== */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
         }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes shimmer {
+        0%,
+        100% {
+          background-position: -200% 0;
+        }
+        50% {
+          background-position: 200% 0;
+        }
+      }
+      @keyframes pulse-glow {
+        0%,
+        100% {
+          text-shadow: 0 0 0 rgba(0, 137, 167, 0);
+        }
+        50% {
+          text-shadow:
+            0 0 12px rgba(0, 137, 167, 0.25),
+            0 0 24px rgba(0, 137, 167, 0.08);
+        }
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-6px);
+        }
+      }
 
-        /* 放大后的头像容器（从 120px 扩大至 180px） */
-        .avatar-container {
-            width: 180px;
-            height: 180px;
-            margin: 0 auto 28px;
-            border: 1px solid var(--border-color);
-            padding: 6px;
-            background-color: #FFFFFF;
-            border-radius: 2px;
-        }
+      /* ===== 顶部导航栏 ===== */
+      .topbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--topbar-height);
+        display: flex;
+        align-items: center;
+        padding: 0 24px;
+        background-color: rgba(252, 250, 242, 0.85);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border-color);
+        z-index: 1000;
+      }
 
-        .avatar {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+      .topbar-brand {
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        color: var(--text-main);
+        text-decoration: none;
+        white-space: nowrap;
+        flex-shrink: 0;
+        text-align: center;
+        line-height: 1.5;
+      }
+      .topbar-brand__sub {
+        display: block;
+        font-size: 11px;
+        font-weight: 300;
+        letter-spacing: 0.18em;
+        color: var(--text-muted);
+        opacity: 0.55;
+      }
 
-        h1 {
-            font-size: 28px;
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            color: var(--text-main);
-            margin-bottom: 16px;
-        }
+      .topbar-nav {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 24px;
+        flex: 1;
+      }
 
-        .profile-bio {
-            font-size: 15px;
-            color: var(--text-muted);
-            font-weight: 300;
-            letter-spacing: 0.08em;
-        }
+      .topbar-nav-link {
+        font-size: 14px;
+        font-weight: 400;
+        letter-spacing: 0.06em;
+        color: var(--text-muted);
+        text-decoration: none;
+        padding: 6px 0;
+        border-bottom: 2px solid transparent;
+        position: relative;
+        transition:
+          color 0.25s ease,
+          border-color 0.25s ease;
+      }
 
-        /* 板块通用样式 */
-        section {
-            margin-bottom: 70px;
-        }
+      .topbar-nav-link:hover,
+      .topbar-nav-link--active {
+        color: var(--accent-cyan);
+        border-bottom-color: var(--accent-cyan);
+      }
 
-        .section-title {
-            font-size: 18px;
-            font-weight: 500;
-            color: var(--text-main);
-            position: relative;
-            padding-bottom: 10px;
-            margin-bottom: 28px;
-            letter-spacing: 0.08em;
-        }
+      .topbar-social {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        flex-shrink: 0;
+      }
 
-        /* 标题下方的细青线 */
-        .section-title::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 40px;
-            height: 1px;
-            background-color: var(--accent-cyan);
-        }
+      .topbar-social-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        text-decoration: none;
+        color: var(--text-muted);
+        font-size: 20px;
+        transition: all 0.25s ease;
+      }
 
-        /* 迫伞部官网 - 链接卡片排版 */
-        .link-grid {
-            display: block;
-        }
+      .topbar-social-btn:hover {
+        background-color: var(--accent-light);
+        color: var(--accent-cyan);
+      }
 
-        .link-card {
-            display: block;
-            text-decoration: none;
-            padding: 20px;
-            background-color: #FFFFFF;
-            border: 1px solid var(--border-color);
-            margin-bottom: 14px;
-            transition: all 0.35s ease;
-        }
+      .topbar-social-btn--qq:hover {
+        color: #12b7f5;
+      }
+      .topbar-social-btn--github:hover {
+        color: #24292f;
+      }
+      .topbar-social-btn--bilibili:hover {
+        color: #fb7299;
+      }
+      .topbar-social-btn--email:hover {
+        color: #ea4335;
+      }
+      .topbar-social-btn--netease:hover {
+        color: #ec4141;
+      }
 
-        .link-card:hover {
-            border-color: var(--accent-cyan);
-            background-color: var(--accent-light);
-            transform: translateX(4px);
+      @media (max-width: 680px) {
+        .topbar-nav {
+          display: none;
         }
+      }
 
-        .link-title {
-            font-size: 15px;
-            font-weight: 500;
-            color: var(--accent-cyan);
-            margin-bottom: 4px;
-        }
+      /* ===== 主体容器 ===== */
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 24px 24px 80px;
+      }
 
-        .link-url {
-            font-size: 12px;
-            color: var(--text-muted);
-            font-family: monospace;
-        }
+      /* ===== 个人介绍区域 ===== */
+      header {
+        text-align: center;
+        padding-top: calc(var(--topbar-height) + 40px);
+        padding-bottom: 56px;
+        border-bottom: 1px solid var(--border-color);
+        margin-bottom: 56px;
+      }
 
-        /* 待补充板块的极简占位样式 */
-        .placeholder-box {
-            padding: 40px;
-            background-color: rgba(255, 255, 255, 0.4);
-            border: 1px dashed var(--border-color);
-            color: var(--text-muted);
-            font-size: 13px;
-            font-weight: 300;
-            letter-spacing: 0.15em;
-            text-align: center;
-        }
+      .avatar-container {
+        width: 200px;
+        height: 200px;
+        margin: 0 auto 28px;
+        border: 1px solid var(--border-color);
+        padding: 6px;
+        background-color: #ffffff;
+        border-radius: 4px;
+        transition:
+          transform 0.5s ease,
+          box-shadow 0.5s ease;
+        animation: float 6s ease-in-out infinite;
+      }
+      .avatar-container:hover {
+        transform: scale(1.04);
+        box-shadow: 0 8px 32px rgba(0, 137, 167, 0.15);
+      }
 
-        /* 页脚 */
-        footer {
-            text-align: center;
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-top: 120px;
-            font-weight: 300;
-            letter-spacing: 0.05em;
-            border-top: 1px solid var(--border-color);
-            padding-top: 30px;
-        }
+      .avatar {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      h1 {
+        font-size: 36px;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        color: var(--text-main);
+        margin-bottom: 20px;
+        transition: text-shadow 0.5s ease;
+      }
+      h1:hover {
+        animation: pulse-glow 2s ease-in-out infinite;
+      }
+      .h1-sym {
+        display: inline-block;
+        transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        color: var(--accent-cyan);
+        font-weight: 300;
+        margin: 0 10px;
+      }
+      h1:hover .h1-sym--left {
+        transform: translateX(-10px) rotate(-360deg) scale(1.4);
+        color: var(--accent-amber);
+      }
+      h1:hover .h1-sym--right {
+        transform: translateX(10px) rotate(360deg) scale(1.4);
+        color: var(--accent-amber);
+      }
+
+      .profile-bio {
+        font-size: 17px;
+        color: var(--text-muted);
+        font-weight: 300;
+        letter-spacing: 0.1em;
+        max-width: 560px;
+        margin: 0 auto;
+        line-height: 1.9;
+      }
+
+      /* ===== 板块卡片网格 ===== */
+      .section-label {
+        text-align: center;
+        font-size: 26px;
+        font-weight: 400;
+        letter-spacing: 0.16em;
+        color: var(--text-muted);
+        margin-bottom: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 18px;
+      }
+      .section-label::before,
+      .section-label::after {
+        content: "";
+        display: inline-block;
+        width: 48px;
+        height: 1px;
+        background: var(--border-color);
+        transition:
+          width 0.5s ease,
+          background 0.5s ease;
+      }
+      .section-label:hover::before,
+      .section-label:hover::after {
+        width: 64px;
+        background: var(--accent-cyan);
+      }
+
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 18px;
+        margin-bottom: 60px;
+      }
+
+      .card {
+        display: block;
+        text-decoration: none;
+        padding: 16px 28px;
+        background-color: #ffffff;
+        border: 1px solid var(--border-color);
+        text-align: center;
+        transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+        animation: fadeInUp 0.6s ease both;
+      }
+      .card:nth-child(1) {
+        animation-delay: 0.05s;
+      }
+      .card:nth-child(2) {
+        animation-delay: 0.15s;
+      }
+      .card:nth-child(3) {
+        animation-delay: 0.25s;
+      }
+      .card:nth-child(4) {
+        animation-delay: 0.35s;
+      }
+      .card:nth-child(5) {
+        animation-delay: 0.45s;
+      }
+
+      .card:hover {
+        border-color: var(--accent-cyan);
+        background-color: var(--accent-light);
+        transform: translateY(-6px);
+        box-shadow: 0 12px 32px rgba(0, 137, 167, 0.1);
+      }
+
+      .card-icon {
+        font-size: 45px;
+        margin-bottom: 8px;
+        color: var(--accent-cyan);
+        transition: transform 0.4s ease;
+      }
+      .card:hover .card-icon {
+        transform: scale(1.15);
+      }
+
+      .card-title {
+        font-size: 27px;
+        font-weight: 500;
+        color: var(--text-main);
+        letter-spacing: 0.08em;
+        margin-bottom: 6px;
+      }
+
+      .card-desc {
+        font-size: 15px;
+        color: var(--text-muted);
+        font-weight: 300;
+        letter-spacing: 0.05em;
+        line-height: 1.75;
+      }
+
+      .card-arrow {
+        display: inline-block;
+        margin-top: 10px;
+        font-size: 14px;
+        color: var(--accent-cyan);
+        letter-spacing: 0.08em;
+        transition: transform 0.3s ease;
+      }
+      .card:hover .card-arrow {
+        transform: translateX(4px);
+      }
+
+      /* 未完成提示 */
+      .card--wip {
+        position: relative;
+        overflow: hidden;
+      }
+      .card--wip::after {
+        content: "网页未完成";
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(180, 40, 40, 0.85);
+        color: #fff;
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0.1em;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+      }
+      .card--wip:hover::after {
+        opacity: 1;
+      }
+
+      /* ===== 页脚 ===== */
+      footer {
+        text-align: center;
+        font-size: 12px;
+        color: var(--text-muted);
+        font-weight: 300;
+        letter-spacing: 0.06em;
+        border-top: 1px solid var(--border-color);
+        padding-top: 30px;
+      }
+      footer::before {
+        content: "∵ ~ ∴ ⊗";
+        display: block;
+        font-size: 14px;
+        letter-spacing: 0.2em;
+        color: var(--border-color);
+        margin-bottom: 14px;
+      }
+
+      /* ---- 字体面板 ---- */
+      .font-panel-toggle {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        border: 1px solid var(--border-color);
+        background: var(--bg-color);
+        color: var(--text-muted);
+        font-size: 20px;
+        cursor: pointer;
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.25s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      }
+      .font-panel-toggle:hover {
+        color: var(--accent-cyan);
+        border-color: var(--accent-cyan);
+      }
+      .font-panel {
+        position: fixed;
+        top: 0;
+        right: -380px;
+        width: 360px;
+        height: 100vh;
+        background: var(--bg-color);
+        z-index: 2001;
+        padding: 24px;
+        overflow-y: auto;
+        transition: right 0.3s ease;
+        box-shadow: -2px 0 12px rgba(0, 0, 0, 0.06);
+      }
+      .font-panel--open {
+        right: 0;
+      }
+      .font-panel__backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.2);
+        z-index: 2000;
+        display: none;
+      }
+      .font-panel__backdrop--visible {
+        display: block;
+      }
+      .font-panel__header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 28px;
+      }
+      .font-panel__title {
+        font-size: 16px;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+      }
+      .font-panel__close {
+        width: 36px;
+        height: 36px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 20px;
+        color: var(--text-muted);
+      }
+      .font-panel__close:hover {
+        color: var(--accent-cyan);
+      }
+      .font-category {
+        margin-bottom: 24px;
+      }
+      .font-category__label {
+        font-size: 12px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        margin-bottom: 8px;
+      }
+      .font-category__select {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid var(--border-color);
+        background: #fff;
+        font-size: 14px;
+        color: var(--text-main);
+        cursor: pointer;
+        font-family: inherit;
+      }
+      .font-category__select:focus {
+        outline: none;
+        border-color: var(--accent-cyan);
+      }
+      .font-upload {
+        margin-top: 32px;
+        padding-top: 24px;
+        border-top: 1px solid var(--border-color);
+      }
+      .font-hint {
+        font-size: 12px;
+        color: var(--text-muted);
+        margin-top: 8px;
+      }
+      .font-reset {
+        margin-top: 16px;
+      }
+      .font-reset__btn {
+        font-size: 12px;
+        color: var(--text-muted);
+        background: none;
+        border: none;
+        cursor: pointer;
+        text-decoration: underline;
+        padding: 0;
+      }
+
+      /* toast 提示 */
+      .toast {
+        position: fixed;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: var(--text-main);
+        color: #fff;
+        padding: 10px 24px;
+        border-radius: 6px;
+        font-size: 13px;
+        letter-spacing: 0.06em;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        pointer-events: none;
+        z-index: 3000;
+      }
+      .toast--show {
+        opacity: 1;
+      }
+
+      h1,
+      h2,
+      h3,
+      .card-title,
+      .section-title,
+      .section-label {
+        font-family: var(--font-heading);
+      }
+      .card-desc,
+      .profile-bio {
+        font-family: var(--font-card-desc);
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <!-- ===== 顶部导航栏 ===== -->
+    <nav class="topbar">
+      <a href="/" class="topbar-brand"
+        >因果交流电灯<span class="topbar-brand__sub">∵ ~ ∴ ⊗</span></a
+      >
+
+      <div class="topbar-nav">
+        <a href="/Notes/" class="topbar-nav-link">学习笔记</a>
+        <a href="/poshanbu/" class="topbar-nav-link">迫伞部</a>
+        <a href="/Music/" class="topbar-nav-link">音乐</a>
+        <a href="/Obsidian/" class="topbar-nav-link">Obsidian</a>
+        <a href="/Typography/" class="topbar-nav-link">字体</a>
+      </div>
+
+      <div class="topbar-social">
+        <!-- GitHub -->
+        <a
+          href="https://github.com/sulcop5"
+          class="topbar-social-btn topbar-social-btn--github"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="GitHub"
+          aria-label="GitHub"
+        >
+          <i class="fa-brands fa-github" aria-hidden="true"></i>
+        </a>
+
+        <!-- Bilibili -->
+        <a
+          href="https://space.bilibili.com/398278423"
+          class="topbar-social-btn topbar-social-btn--bilibili"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="哔哩哔哩"
+          aria-label="哔哩哔哩"
+        >
+          <i class="fa-brands fa-bilibili" aria-hidden="true"></i>
+        </a>
+
+        <!-- QQ -->
+        <a
+          class="topbar-social-btn topbar-social-btn--qq"
+          title="点击复制QQ号：2263467979"
+          aria-label="复制QQ号"
+          onclick="
+            navigator.clipboard.writeText('2263467979');
+            var t = document.getElementById('toast');
+            t.classList.add('toast--show');
+            setTimeout(function () {
+              t.classList.remove('toast--show');
+            }, 2000);
+            return false;
+          "
+          href="javascript:void(0)"
+        >
+          <i class="fa-brands fa-qq" aria-hidden="true"></i>
+        </a>
+
+        <!-- 网易云音乐 -->
+        <a
+          href="https://y.music.163.com/m/user?id=3384714585"
+          class="topbar-social-btn topbar-social-btn--netease"
+          target="_blank"
+          rel="noopener noreferrer"
+          title="网易云音乐"
+          aria-label="网易云音乐"
+        >
+          <i class="fa-solid fa-music" aria-hidden="true"></i>
+        </a>
+
+        <!-- Email -->
+        <a
+          href="mailto:2263467979@qq.com"
+          class="topbar-social-btn topbar-social-btn--email"
+          title="2263467979@qq.com"
+          aria-label="Email"
+        >
+          <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+        </a>
+      </div>
+    </nav>
 
     <div class="container">
-        
-        <!-- 头图与个人介绍 -->
-        <header>
-            <div class="avatar-container">
-                <img src="avatar.jpg" alt="因果交流电灯" class="avatar">
+      <!-- ===== 个人介绍 ===== -->
+      <header>
+        <div class="avatar-container">
+          <img src="avatar.jpg" alt="因果交流电灯" class="avatar" />
+        </div>
+        <h1>
+          <span class="h1-sym h1-sym--left">∵</span>因果交流电灯<span
+            class="h1-sym h1-sym--right"
+            >∴</span
+          >
+        </h1>
+        <p class="profile-bio">
+          幸せでありますように。<br />
+          <!-- 这里可以放更多个人介绍，比如： -->
+          <!-- 学生 / 开发者 / 喜欢折腾各种东西 -->
+        </p>
+      </header>
+
+      <!-- ===== 板块摘要卡片 ===== -->
+      <main>
+        <p class="section-label">探索</p>
+
+        <div class="cards-grid">
+          <!-- 学习笔记 -->
+          <a href="/Notes/" class="card card--wip">
+            <div class="card-icon">
+              <i class="fa-solid fa-book" aria-hidden="true"></i>
             </div>
-            <h1>因果交流电灯</h1>
-            <div class="profile-bio">
-                幸せでありますように。
+            <h2 class="card-title">学习笔记</h2>
+            <p class="card-desc">
+              课程笔记、公式集与知识整理。内含有 PDF 和 Markdown 源码。
+            </p>
+            <span class="card-arrow">了解更多 →</span>
+          </a>
+
+          <!-- 迫伞部 -->
+          <a href="/poshanbu/" class="card">
+            <div class="card-icon">
+              <i class="fa-solid fa-umbrella" aria-hidden="true"></i>
             </div>
-        </header>
+            <h2 class="card-title">迫伞部</h2>
+            <p class="card-desc">
+              河豚发电、图片交流、音乐鉴赏、乐谱制作的小团体。官网内有图片、视频、乐谱资源。
+            </p>
+            <span class="card-arrow">官方网站 →</span>
+          </a>
 
-        <main>
-            <!-- 1. 迫伞部官网板块 -->
-            <section id="poshanbu">
-                <h2 class="section-title">迫伞部官网</h2>
-                <div class="link-grid">
-                    <a href="https://sulcop5.github.io" class="link-card" target="_blank">
-                        <div class="link-title">迫伞部 官方网站 ↗</div>
-                        <div class="link-url">https://sulcop5.github.io</div>
-                    </a>
-                    <a href="https://space.bilibili.com/3546769984064032" class="link-card" target="_blank">
-                        <div class="link-title">迫伞部 哔哩哔哩官方频道 ↗</div>
-                        <div class="link-url">space.bilibili.com/3546769984064032</div>
-                    </a>
-                </div>
-            </section>
+          <!-- 音乐 -->
+          <a href="/Music/" class="card card--wip">
+            <div class="card-icon">
+              <i class="fa-solid fa-music" aria-hidden="true"></i>
+            </div>
+            <h2 class="card-title">音乐</h2>
+            <p class="card-desc">曲目赏析、乐评随感、鉴赏美。</p>
+            <span class="card-arrow">了解更多 →</span>
+          </a>
 
-            <!-- 2. 学习笔记 -->
-            <section id="notes">
-                <h2 class="section-title">学习笔记整理</h2>
-                <div class="placeholder-box">待补充</div>
-            </section>
+          <!-- Obsidian -->
+          <a href="/Obsidian/" class="card card--wip">
+            <div class="card-icon">
+              <i class="fa-brands fa-markdown" aria-hidden="true"></i>
+            </div>
+            <h2 class="card-title">Obsidian</h2>
+            <p class="card-desc">关于 Markdown 使用软件 Obsidian 的教程。</p>
+            <span class="card-arrow">了解更多 →</span>
+          </a>
 
-            <!-- 3. 音乐 -->
-            <section id="music">
-                <h2 class="section-title">音乐相关内容</h2>
-                <div class="placeholder-box">待补充</div>
-            </section>
+          <!-- 字体 -->
+          <a href="/Typography/" class="card card--wip">
+            <div class="card-icon">
+              <i class="fa-solid fa-font" aria-hidden="true"></i>
+            </div>
+            <h2 class="card-title">字体</h2>
+            <p class="card-desc">
+              字体鉴赏、排版心得与 CJK 字体相关资源的整理分享。
+            </p>
+            <span class="card-arrow">了解更多 →</span>
+          </a>
+        </div>
+      </main>
 
-            <!-- 4. Obsidian 教程 -->
-            <section id="obsidian">
-                <h2 class="section-title">Obsidian 教程</h2>
-                <div class="placeholder-box">待补充</div>
-            </section>
-
-            <!-- 5. 字体 -->
-            <section id="typography">
-                <h2 class="section-title">字体相关内容</h2>
-                <div class="placeholder-box">待补充</div>
-            </section>
-        </main>
-
-        <!-- 页脚 -->
-        <footer>
-            <p>&copy; 2026 因果交流电灯. Powered by GitHub Pages.</p>
-        </footer>
-
+      <!-- 页脚 -->
+      <footer>
+        <p>&copy; 2026 因果交流电灯. Powered by GitHub Pages.</p>
+      </footer>
     </div>
 
-</body>
+    <!-- 字体面板切换按钮 -->
+    <button
+      class="font-panel-toggle"
+      id="fontPanelToggle"
+      title="字体设置"
+      aria-label="字体设置"
+    >
+      Aa
+    </button>
+
+    <!-- 字体面板遮罩 -->
+    <div class="font-panel__backdrop" id="fontPanelBackdrop"></div>
+
+    <!-- 字体面板 -->
+    <aside class="font-panel" id="fontPanel">
+      <div class="font-panel__header">
+        <span class="font-panel__title">字体设置</span>
+        <button class="font-panel__close" id="fontPanelClose" aria-label="关闭">
+          &times;
+        </button>
+      </div>
+
+      <div class="font-category">
+        <div class="font-category__label">正文</div>
+        <select class="font-category__select" id="fontBodySelect">
+          <option value="">默认（Sarasa Gothic J）</option>
+        </select>
+      </div>
+
+      <div class="font-category">
+        <div class="font-category__label">标题</div>
+        <select class="font-category__select" id="fontHeadingSelect">
+          <option value="">默认（Sarasa Gothic J）</option>
+        </select>
+      </div>
+
+      <div class="font-category">
+        <div class="font-category__label">卡片描述</div>
+        <select class="font-category__select" id="fontCardDescSelect">
+          <option value="">默认（Sarasa Gothic J）</option>
+        </select>
+      </div>
+
+      <div class="font-upload">
+        <div class="font-hint">
+          把 .ttf / .woff2 拖入 fonts 文件夹即自动出现在列表中
+        </div>
+      </div>
+
+      <div class="font-reset">
+        <button class="font-reset__btn" id="fontResetBtn">恢复默认字体</button>
+      </div>
+    </aside>
+
+    <script>
+      (function () {
+        var DEFAULTS = {
+          body: "'Sarasa Gothic J', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif",
+          heading:
+            "'Sarasa Gothic J', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif",
+          cardDesc:
+            "'Sarasa Gothic J', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif",
+        };
+
+        var root = document.documentElement;
+        var toggle = document.getElementById("fontPanelToggle");
+        var panel = document.getElementById("fontPanel");
+        var backdrop = document.getElementById("fontPanelBackdrop");
+        var closeBtn = document.getElementById("fontPanelClose");
+        var resetBtn = document.getElementById("fontResetBtn");
+        var selectBody = document.getElementById("fontBodySelect");
+        var selectHeading = document.getElementById("fontHeadingSelect");
+        var selectCardDesc = document.getElementById("fontCardDescSelect");
+
+        function open() {
+          panel.classList.add("font-panel--open");
+          backdrop.classList.add("font-panel__backdrop--visible");
+        }
+        function close() {
+          panel.classList.remove("font-panel--open");
+          backdrop.classList.remove("font-panel__backdrop--visible");
+        }
+        toggle.onclick = open;
+        closeBtn.onclick = close;
+        backdrop.onclick = close;
+
+        // 从服务端扫描 fonts/ 文件夹
+        function loadFonts() {
+          fetch("/api/fonts")
+            .then(function (r) {
+              return r.json();
+            })
+            .then(function (fonts) {
+              [selectBody, selectHeading, selectCardDesc].forEach(
+                function (sel) {
+                  sel
+                    .querySelectorAll('option:not([value=""])')
+                    .forEach(function (o) {
+                      o.remove();
+                    });
+                  fonts.forEach(function (f) {
+                    var opt = document.createElement("option");
+                    var fullPath = "fonts/" + f;
+                    opt.value = fullPath;
+                    opt.textContent = f.replace(/\.[^.]+$/, "");
+                    sel.appendChild(opt);
+                  });
+                },
+              );
+            })
+            .catch(function () {});
+        }
+
+        function injectFont(filename) {
+          var name = filename.replace(/^.*[\\/]/, "").replace(/\.[^.]+$/, "");
+          var id = "ff-" + name.replace(/[^a-zA-Z0-9]/g, "-");
+          if (document.getElementById(id)) return;
+          var ext = filename.split(".").pop().toLowerCase();
+          var fmt =
+            ext === "ttf" ? "truetype" : ext === "woff2" ? "woff2" : "opentype";
+          var style = document.createElement("style");
+          style.id = id;
+          style.textContent =
+            "@font-face{font-family:'" +
+            name +
+            "';src:url('" +
+            filename +
+            "') format('" +
+            fmt +
+            "')}";
+          document.head.appendChild(style);
+        }
+
+        function applyFont(type, filename) {
+          var name = filename.replace(/^.*[\\/]/, "").replace(/\.[^.]+$/, "");
+          var val = "'" + name + "', var(--font-body)";
+          if (type === "body") root.style.setProperty("--font-body", val);
+          else if (type === "heading")
+            root.style.setProperty("--font-heading", val);
+          else if (type === "cardDesc")
+            root.style.setProperty("--font-card-desc", val);
+          try {
+            localStorage.setItem("font-" + type, filename);
+          } catch (e) {}
+        }
+
+        function resetFont(type) {
+          if (type === "body")
+            root.style.setProperty("--font-body", DEFAULTS.body);
+          else if (type === "heading")
+            root.style.setProperty("--font-heading", DEFAULTS.heading);
+          else if (type === "cardDesc")
+            root.style.setProperty("--font-card-desc", DEFAULTS.cardDesc);
+          try {
+            localStorage.removeItem("font-" + type);
+          } catch (e) {}
+        }
+
+        ["body", "heading", "cardDesc"].forEach(function (type) {
+          var saved = (function () {
+            try {
+              return localStorage.getItem("font-" + type);
+            } catch (e) {
+              return null;
+            }
+          })();
+          if (saved) {
+            // 兼容旧路径：自动补 fonts/ 前缀
+            if (saved.indexOf("fonts/") !== 0 && saved.indexOf("/") === -1) {
+              saved = "fonts/" + saved;
+              try {
+                localStorage.setItem("font-" + type, saved);
+              } catch (e) {}
+            }
+            injectFont(saved);
+            applyFont(type, saved);
+            setTimeout(function () {
+              var sel =
+                type === "body"
+                  ? selectBody
+                  : type === "heading"
+                    ? selectHeading
+                    : selectCardDesc;
+              sel.value = saved;
+            }, 300);
+          }
+        });
+
+        selectBody.onchange = function () {
+          if (!this.value) {
+            resetFont("body");
+            this.value = "";
+            return;
+          }
+          injectFont(this.value);
+          applyFont("body", this.value);
+        };
+        selectHeading.onchange = function () {
+          if (!this.value) {
+            resetFont("heading");
+            this.value = "";
+            return;
+          }
+          injectFont(this.value);
+          applyFont("heading", this.value);
+        };
+        selectCardDesc.onchange = function () {
+          if (!this.value) {
+            resetFont("cardDesc");
+            this.value = "";
+            return;
+          }
+          injectFont(this.value);
+          applyFont("cardDesc", this.value);
+        };
+
+        resetBtn.onclick = function () {
+          ["font-body", "font-heading", "font-card-desc"].forEach(function (k) {
+            root.style.removeProperty(k);
+          });
+          ["body", "heading", "cardDesc"].forEach(function (k) {
+            try {
+              localStorage.removeItem("font-" + k);
+            } catch (e) {}
+          });
+          selectBody.value = "";
+          selectHeading.value = "";
+          selectCardDesc.value = "";
+          root.style.setProperty("--font-body", DEFAULTS.body);
+          root.style.setProperty("--font-heading", DEFAULTS.heading);
+          root.style.setProperty("--font-card-desc", DEFAULTS.cardDesc);
+        };
+
+        loadFonts();
+      })();
+    </script>
+    <div class="toast" id="toast">QQ号已复制：2263467979</div>
+  </body>
 </html>
